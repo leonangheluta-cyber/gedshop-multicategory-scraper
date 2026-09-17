@@ -1,0 +1,13 @@
+# Cache Python
+__pycache__/
+*.pyc
+
+# Output e dati grezzi/puliti (esclusi dal repo per policy sul sito sorgente)
+cleaned_output/
+excels/
+output_scrapy/
+logs/
+all_categories.xlsx
+
+# Ambiente/editor
+.vscode/
