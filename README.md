@@ -1,5 +1,10 @@
 # GedShop Multi-Category Scraper
 
+![Python](https://img.shields.io/badge/Python-3.x-blue?logo=python&logoColor=white)
+![Scrapy](https://img.shields.io/badge/Scrapy-web%20scraping-60A839?logo=scrapy&logoColor=white)
+![pandas](https://img.shields.io/badge/pandas-data%20cleaning-150458?logo=pandas&logoColor=white)
+![Status](https://img.shields.io/badge/status-completed-brightgreen)
+
 Automated data collection pipeline that turns an entire product catalog into structured, analysis-ready data — no manual copy-pasting, no hours spent browsing pages by hand.
 
 This project simulates a real business need: keeping track of a large, multi-category product catalog (pricing, availability, product range) without manually checking hundreds of pages. Built on **gedshop.it**, an Italian e-commerce site, it collects and processes data across three categories — Workwear, Sport, and Gadget — roughly **10,000 products** in total.
