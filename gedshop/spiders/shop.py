@@ -1,5 +1,24 @@
 import scrapy
+import requests
+from pathlib import Path
+from dotenv import load_dotenv
+import os
+path_env=Path.home()/"Secret"/".env"
+load_dotenv(dotenv_path=path_env)
+telegram_bot=os.environ.get("TELEGRAM_BOT")
+chat_id=os.environ.get("CHAT_ID")
+print(telegram_bot)
 from config_ecom_scraper import GADGET, WORK, SPORT
+import logging
+logging.basicConfig(level=logging.INFO,
+                    format="%(asctime)s - %(levelname)s - %(message)s",
+                    filename="script_ged_shop.log")
+
+path_env=Path.home()/"Secret"/".env.txt"
+load_dotenv(dotenv_path=path_env)
+telegram_bot=os.environ.get("TELEGRAM_BOT")
+chat_id=os.environ.get("CHAT_ID")
+
 
 class ShopSpider(scrapy.Spider):
     name = "shop"
@@ -7,9 +26,23 @@ class ShopSpider(scrapy.Spider):
     urls_category={"gadget": GADGET, 
                    "work": WORK,
                    "sport": SPORT}
+    
+    def quantity_check(good_data, current_data):
+        if current_data==good_data:
+            result="Normal"
+        elif current_data<=good_data-(good_data*0.90):
+            result="Critical"
+        elif current_data<=good_data-(good_data*0.15):
+            result="Attention"
+        else:
+            result="Normal"
+        return result
 
+    def notify_allert_telegram(message):
+        message=requests.get(f"https://api.telegram.org/bot{telegram_bot}/sendMessage?chat_id={chat_id}&text=")
+        return message
+    
     async def start(self):
-        print("DEBUG category:", self.category)
         url=self.urls_category[self.category]
         yield scrapy.Request(url, callback=self.parse)
 
