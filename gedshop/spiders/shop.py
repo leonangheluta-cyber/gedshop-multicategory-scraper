@@ -20,6 +20,7 @@ class ShopSpider(scrapy.Spider):
     urls_category={"gadget": GADGET, 
                    "work": WORK,
                    "sport": SPORT}
+    number_products_missing=0
 
     def notify_allert_telegram(self, message):
         url=f"https://api.telegram.org/bot{telegram_bot}/sendMessage"
@@ -41,10 +42,8 @@ class ShopSpider(scrapy.Spider):
             logging.critical("Names not found")
             self.notify_allert_telegram("Names in page not found")
             return   
-        
         link=f"{self.urls_category[self.category]}?page={page_number+1}"
         yield response.follow(link, callback=self.parse, cb_kwargs={"page_number": page_number+1})
-        number_products_missing=0
         for n in names:
             name=n.css("div.card-title strong::text").get()
             if not name:
